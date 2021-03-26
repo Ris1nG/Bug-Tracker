@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+    <head lang="en">
+        <meta name="theme-color" content="#0c1928" />
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="shortcut icon" href="{% static 'img/spider.svg' %}" type="image/x-icon"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+        <!--Import materialize.css-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+        <link rel="stylesheet" href="{% static 'css/colors.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/layout.css'%}"/>
+        {% block css %}
+        {% endblock %}
+
+        <title>
+            {% block title %}
+                Bug Tracker
+            {% endblock %}
+        </title>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+
+    <body style="overflow: hidden">
+        <div id="preloader-background">
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+        <div class="base-error">
+            Error Message!
+            <i class="material-icons" id="close-base-error">Clear</i>
+        </div>
+        <ul class="sidebar" id="mobile-links">
+            {% if not request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'homepage' %}">
+                    Login or Sign-up
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'dashboard' %}">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'issue' %}">
+                    Bug Issue
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'profile' %}">
+                    {{ request.user.username }}
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'task' %}">
+                    tasks
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Logout
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        
+        <div class="main">
+            <div class="left">
+                <div class="left-div">
+                    <div class="top-box">
+                        <a href="{% url 'dashboard' %}">
+                            <img src="{%static 'img/spider.svg' %}"/>
+                            <h1>Bug Binder</h1>
+                        </a>      
+                    </div>
+                <ul class="menu">
+                    {% if not request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'home' %}">
+                                Login or Signup
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'dashboard' %}">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'issue' %}">
+                                Bug Issue
+                            </a>
+                        </li>
+                            <a href="{% url 'profile' %}">
+                                {{request.user.username}}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'task' %}">
+                                Tasks
+                            </a>
+                            {% if task_count != 0 %}
+                                <span class="white-text badge" style="background-color: #3282b8; border-radius: 4px">
+                                    {{ task_count }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a href="{%url 'logout'%}">
+                                Logout
+                            </a>
+                        </li>
+                    {% endif %} 
+                </ul>
+                </div>
+            </div>
+            <div class="right">
+                <div class="top-mobile">
+                    <a class="sidenav-trigger menu-mobile" href="#" data-target="mobile-links"></a>
+                    <h1>Bug Binder</h1>
+                </div>
+                <div class="content">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <script>
+            window.onload = () => {
+                setTimeout(function () {
+                    document.getElementById("preloader-background").style.display = "none";
+                    document.body.style.overflow = "auto";
+                }, 1); ///use 1000 in production
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                let elems = document.querySelectorAll(".sidenav");
+                let inst = M.Sidenav.init(elems);
+
+                let elems = document.querySelectorAll(".modal");
+                let inst = M.Modal.init(elems);
+                let elems = document.querySelectorAll("select");
+                let inst = M.FormSelect.init(elems);
+                /// maybe use var
+            });
+        </script>
+        {% block script %}
+        {% endblock %}
+    </body>
+</html>
