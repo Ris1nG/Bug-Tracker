@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    Bug Tracker -> {{ project.title }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/public.css'%}"/>
+{% endblock %}
+
+{% block body %}
+    <div class="container-div">
+    <div class="box">
+        <h6>{{ project.title }}</h6>
+        <div class="box-body">
+        <p>
+            {{ project.description }}
+        </p>
+        </div>
+    </div>
+
+    <div class="box" id="message" style="display: none; margin-top: 3rem;">
+        <h6>Success!</h6>
+        <div class="box-body">
+        <p align="center">
+            Received Report. We will contact you as soon as possible.
+        </p>
+        </div>
+    </div>
+
+    <div class="box bug" id="bug-report">
+        <h6>Report a bug</h6>
+        <div class="box-body fields">
+        
+        <div class="row">
+            <div class="col s12 l12">
+            <div class="input-field">
+                <i class="material-icons prefix white-text">font_download</i>
+                <input id="title" type="text" class="validate white-text" autocomplete="off"/>
+                <label for="title" class="white-text">Title</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+            <i class="material-icons prefix white-text">donut_large</i>
+            <textarea id="reproduce" class="materialize-textarea" autocomplete="off"></textarea>
+            <label for="reproduce" class="white-text">Steps to reproduce</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+            <i class="material-icons prefix white-text">desktop_mac</i>
+            <textarea id="environment" class="materialize-textarea" autocomplete="off"></textarea>
+            <label for="environment" class="white-text">Environment</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+            <i class="material-icons prefix white-text">insert_comment</i>
+            <textarea id="comment" class="materialize-textarea" autocomplete="off"></textarea>
+            <label for="comment" class="white-text">Comment</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 l12">
+            <div class="input-field">
+                <i class="material-icons prefix white-text">font_download</i>
+                <input id="email" type="text" class="validate white-text" autocomplete="off"/>
+                <label for="email" class="white-text">Email Address</label>
+            </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div style="display: flex; justify-content: flex-end">
+            <a class="waves-effect pulse waves-light btn orange" id="submit">Submit</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <input type="hidden" value="{{ project.id }}" id="project-id">
+{% endblock %}
+
+{% block script %}
+    <script src="{%static 'js/public.js'%}"></script>
+{% endblock %}

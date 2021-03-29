@@ -141,7 +141,7 @@
                 setTimeout(function () {
                     document.getElementById("preloader-background").style.display = "none";
                     document.body.style.overflow = "auto";
-                }, 1); ///use 1000 in production
+                }, 1);
             };
 
             document.addEventListener("DOMContentLoaded", function () {
@@ -152,7 +152,6 @@
                 let inst = M.Modal.init(elems);
                 let elems = document.querySelectorAll("select");
                 let inst = M.FormSelect.init(elems);
-                /// maybe use var
             });
         </script>
         {% block script %}
